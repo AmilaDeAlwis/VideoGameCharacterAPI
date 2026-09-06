@@ -1,4 +1,6 @@
 using Scalar.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using VideoGameCharacterAPI.Data;
 using VideoGameCharacterAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IVideoGameCharacterService, VideoGameCharacterService>();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
